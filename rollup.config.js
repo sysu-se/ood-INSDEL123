@@ -53,10 +53,16 @@ export default {
 
 		css({
 			output: !production ? 'bundle.css' : (styles, styleNodes) => {
+				let wroteCritical = false;
 				for (let filename of Object.keys(styleNodes)) {
 					if (filename.endsWith('App.css')) {
 						writeFileSync('./dist/critical.css', styleNodes[filename]);
+						wroteCritical = true;
 					}
+				}
+
+				if (!wroteCritical) {
+					writeFileSync('./dist/critical.css', styles);
 				}
 
 				writeFileSync('./dist/bundle.css', styles);
