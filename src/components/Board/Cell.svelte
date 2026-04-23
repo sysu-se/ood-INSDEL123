@@ -1,6 +1,5 @@
 <script>
 	import Candidates from './Candidates.svelte';
-	import { fade } from 'svelte/transition';
 	import { SUDOKU_SIZE } from '@sudoku/constants';
 	import { cursor } from '@sudoku/stores/cursor';
 

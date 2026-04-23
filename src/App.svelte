@@ -9,14 +9,14 @@
 	import Header from './components/Header/index.svelte';
 	import Modal from './components/Modal/index.svelte';
 
-	gameWon.subscribe(won => {
-		if (won) {
-			game.pause();
-			modal.show('gameover');
-		}
-	});
-
 	onMount(() => {
+		const unsubscribe = gameWon.subscribe(won => {
+			if (won) {
+				game.pause();
+				modal.show('gameover');
+			}
+		});
+
 		let hash = location.hash;
 
 		if (hash.startsWith('#')) {
@@ -29,6 +29,7 @@
 		}
 
 		modal.show('welcome', { onHide: game.resume, sencode });
+		return unsubscribe;
 	});
 </script>
 
@@ -49,6 +50,3 @@
 
 <Modal />
 
-<style global>
-	@import "./styles/global.css";
-</style>

@@ -125,7 +125,7 @@
 		@apply p-3 rounded-t-none;
 	}
 
-	@screen sm {
+	@media (min-width: 640px) {
 		.code-container {
 			@apply flex-row;
 		}

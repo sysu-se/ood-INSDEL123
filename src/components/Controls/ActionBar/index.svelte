@@ -14,7 +14,7 @@
 		@apply flex flex-col flex-wrap justify-between pb-5;
 	}
 
-	@screen xs {
+	@media (min-width: 480px) {
 		.action-bar {
 			@apply flex-row;
 		}

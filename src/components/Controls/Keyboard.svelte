@@ -1,8 +1,7 @@
 <script>
-	import { userGrid } from '@sudoku/stores/grid';
+	import { grid } from '@sudoku/stores/grid';
 	import { cursor } from '@sudoku/stores/cursor';
 	import { notes } from '@sudoku/stores/notes';
-	import { candidates } from '@sudoku/stores/candidates';
 
 	// TODO: Improve keyboardDisabled
 	import { keyboardDisabled } from '@sudoku/stores/keyboard';
@@ -11,17 +10,14 @@
 		if (!$keyboardDisabled) {
 			if ($notes) {
 				if (num === 0) {
-					candidates.clear($cursor);
+					grid.clearCandidates($cursor);
 				} else {
-					candidates.add($cursor, num);
+					grid.toggleCandidate($cursor, num);
 				}
-				userGrid.set($cursor, 0);
+				grid.guess($cursor, 0);
 			} else {
-				if ($candidates.hasOwnProperty($cursor.x + ',' + $cursor.y)) {
-					candidates.clear($cursor);
-				}
-
-				userGrid.set($cursor, num);
+				grid.clearCandidates($cursor);
+				grid.guess($cursor, num);
 			}
 		}
 	}

@@ -4,7 +4,7 @@
 	import { modal } from '@sudoku/stores/modal';
 	import { timer } from '@sudoku/stores/timer';
 	import { difficulty } from '@sudoku/stores/difficulty';
-	import { usedHints } from '@sudoku/stores/hints';
+	import { usedHints } from '@sudoku/stores/grid';
 
 	const gameOverCelebration = GAME_OVER_CELEBRATIONS[Math.floor(Math.random() * GAME_OVER_CELEBRATIONS.length)];
 

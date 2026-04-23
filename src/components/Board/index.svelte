@@ -4,7 +4,7 @@
 	import { grid, userGrid, invalidCells } from '@sudoku/stores/grid';
 	import { settings } from '@sudoku/stores/settings';
 	import { cursor } from '@sudoku/stores/cursor';
-	import { candidates } from '@sudoku/stores/candidates';
+	import { notes } from '@sudoku/stores/notes';
 	import Cell from './Cell.svelte';
 
 	function isSelected(cursorStore, x, y) {
@@ -27,6 +27,20 @@
 
 		return gridStore[cursorStore.y][cursorStore.x];
 	}
+
+	function getCandidatesAt(state, x, y, notesEnabled) {
+		if (state.grid[y][x] !== 0) {
+			return null;
+		}
+
+		const key = x + ',' + y;
+		const manual = state.candidateMarks[key];
+		if (manual && manual.length > 0) {
+			return manual;
+		}
+
+		return notesEnabled ? state.autoCandidates[key] : null;
+	}
 </script>
 
 <div class="board-padding relative z-10">
@@ -42,13 +56,13 @@
 					<Cell {value}
 					      cellY={y + 1}
 					      cellX={x + 1}
-					      candidates={$candidates[x + ',' + y]}
+					      candidates={getCandidatesAt($grid, x, y, $notes)}
 					      disabled={$gamePaused}
 					      selected={isSelected($cursor, x, y)}
-					      userNumber={$grid[y][x] === 0}
+					      userNumber={$grid.puzzleGrid[y][x] === 0}
 					      sameArea={$settings.highlightCells && !isSelected($cursor, x, y) && isSameArea($cursor, x, y)}
 					      sameNumber={$settings.highlightSame && value && !isSelected($cursor, x, y) && getValueAtCursor($userGrid, $cursor) === value}
-					      conflictingNumber={$settings.highlightConflicting && $grid[y][x] === 0 && $invalidCells.includes(x + ',' + y)} />
+					      conflictingNumber={$settings.highlightConflicting && $grid.puzzleGrid[y][x] === 0 && $invalidCells.includes(x + ',' + y)} />
 				{/each}
 			{/each}
 

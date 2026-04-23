@@ -43,7 +43,7 @@
 	}
 
 
-	@screen md {
+	@media (min-width: 768px) {
 		.modal-container {
 			@apply max-w-md;
 		}
